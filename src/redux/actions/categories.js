@@ -7,9 +7,13 @@ import {store} from '../../index';
 export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
 export const SELECT_SUBCATEGORIES = 'SELECT_SUBCATEGORIES';
 export const SELECT_ITEM = 'SELECT_ITEM';
-export const ADD_ITEM_TO_CART= 'ADD_ITEM_TO_CART';
+export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+export const ADD_NROF_ITEMS_TO_CART = 'ADD_NROF_ITEMS_TO_CART';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
+export const SET_SORT_ORDER = 'SET_SORT_ORDER';
+export const SET_IN_STOCK = 'SET_IN_STOCK';
+
 
 export const loadCategories = () => async (dispatch) => { //stor array, items långt in, därför används reduce och map.
     const categories = await getCategories();
@@ -45,46 +49,77 @@ export const selectItem = (item) => (dispatch) => {
 
 export const addItemToCart = (item) => (dispatch) => {
     const state = store.getState();
-    console.log(state);
     let cart = state.cart || [];
     let cartItem = cart.find(cItem => cItem.item === item);
-    if (!cartItem){
+    if (!cartItem) {
         cart.push({
             item, quantity: 1
         });
     } else {
-        cartItem.quantity ++;
-}
+        cartItem.quantity++;
+    }
     dispatch({
         type: ADD_ITEM_TO_CART,
         cart: cart.map(c => c)
     })
 };
 
-export const removeItemFromCart = (item) => (dispatch) => {
+export const addNrOfItemsToCart = (item,nr,replace) => (dispatch) => {
+    console.log(nr);
     const state = store.getState();
-    console.log(state);
     let cart = state.cart || [];
     let cartItem = cart.find(cItem => cItem.item === item);
-    if (cartItem){
-        cartItem.quantity --;
+    if(!cartItem) {
+        cart.push({item, quantity: +nr});
+    } else {
+        cartItem.quantity = replace ? +nr : +cartItem.quantity + +nr;
     }
-    if (cartItem.quantity === 0 ){
+    dispatch({
+        type: ADD_NROF_ITEMS_TO_CART,
+        cart: cart.map(c => c)
+    })
+};
+
+export const removeItemFromCart = (item) => (dispatch) => {
+    const state = store.getState();
+    let cart = state.cart || [];
+    let cartItem = cart.find(cItem => cItem.item === item);
+    if (cartItem) {
+        cartItem.quantity--;
+    }
+    if (cartItem.quantity === 0) {
         cart = cart.filter(c => c !== cartItem);
     }
     dispatch({
         type: REMOVE_ITEM_FROM_CART,
-        cart: cart.map(c => c)// utan map på slutet uppdateras ej componenten
+        cart: cart.map(c => c)
     })
 };
 
-
-export const removeCartItem = (cartItem) => (dispatch) => {
+export const removeCartItem = (item) => (dispatch) => {
     const state = store.getState();
-    let cart = state.cart;
-
+    let cart = state.cart || [];
+    let cartItem = cart.find(cItem => cItem.item === item);
+    cartItem.quantity = 0;
+    if (cartItem.quantity === 0) {
+        cart = cart.filter(c => c !== cartItem);
+    }
     dispatch({
         type: REMOVE_ITEM,
-        cart: cart.filter(c => c !== cartItem)
+        cart: cart.map(c => c)
+    })
+};
+
+export const sortItem = (sortOrder) => (dispatch) => {
+    dispatch({
+        type: SET_SORT_ORDER,
+        sortOrder
+    })
+};
+
+export const inStock = (inStock) => (dispatch) => {
+    dispatch({
+        type: SET_IN_STOCK,
+        inStock
     })
 };

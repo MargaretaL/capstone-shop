@@ -26,18 +26,20 @@ class CategoryListItem extends React.Component {
 
     render() {
         return (
-            <NavItem>
-                <NavLink style={{fontSize: '1.3rem' }} onClick={this.toggleCategory}>{this.props.categoryObject.category}</NavLink>
-                <Collapse isOpen={this.state.collapse}>
-                {this.props.categoryObject.subcategories.map((subcategory, id) => {
-                    return (
-                        <div className="text-muted" style={{marginLeft: '1rem'}} key = {id}>
-                                <NavLink onClick={() => this.handleSelectedSubCategory(subcategory)}>{subcategory.name}</NavLink>
-                        </div>
-                    )
-                })}
-                </Collapse>
-            </NavItem>
+                <NavItem>
+                    <NavLink style={{fontSize: '1.3rem'}}
+                             onClick={this.toggleCategory}>{this.props.categoryObject.category}</NavLink>
+                    <Collapse isOpen={this.state.collapse}>
+                        {this.props.categoryObject.subcategories.map((subcategory, id) => {
+                            return (
+                                <div className="text-muted" style={{marginLeft: '1rem'}} key={id}>
+                                    <NavLink
+                                        onClick={() => this.handleSelectedSubCategory(subcategory)}>{subcategory.name}</NavLink>
+                                </div>
+                            )
+                        })}
+                    </Collapse>
+                </NavItem>
         );
     }
 }

@@ -11,15 +11,17 @@ import {
     Carousel,
     CarouselItem,
     CarouselControl,
-    CarouselCaption,
-    NavLink
+    Button
 } from 'reactstrap';
 
 
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {activeIndex: 0};
+        this.state = {
+            activeIndex: 0,
+            toggle: false
+        };
     }
 
     onExiting = () => {
@@ -31,6 +33,7 @@ class Home extends Component {
     };
 
     next = () => {
+
         if (this.animating) return;
         const nextIndex = this.state.activeIndex === this.props.items && this.props.items.length - 1 ? 0 : this.state.activeIndex + 1;
         this.setState({activeIndex: nextIndex});
@@ -51,12 +54,13 @@ class Home extends Component {
 
         const {activeIndex} = this.state;
 
-        const slides = !this.props.items ? [] : this.props.items.map((item) => {
+        const slides = !this.props.items ? [] : this.props.items.map((item, index) => {
             return (
                 <CarouselItem
+
                     onExiting={this.onExiting}
                     onExited={this.onExited}
-                    key="key">
+                    key={index}>
                     <div className="carousel-image-c">
                         <Link to={`/product/${item.name}`}><img style={{maxHeight: 200, maxWidth: '100%'}}
                                                                 src={item.imagelink} alt="alt"/></Link>
@@ -64,19 +68,19 @@ class Home extends Component {
                 </CarouselItem>
             );
         });
-
         return (
-            <div>
+            <div className="text-center m-5">
                 <div>
                     <h1 className="text-center">Welcome!</h1>
                 </div>
                 <hr className="my-2"/>
-                <div className="m-auto w-50 bg-dark" style={{marginTop: 500}}>
+                <div className="m-auto col-lg-6 bg-dark">
                     <Carousel
+                        interval={this.state.toggle===true? 3000: 0}
                         activeIndex={activeIndex}
                         next={this.next}
                         previous={this.previous} top height="150px"
-                        width="auto">
+                        width="auto" className="m-5">
                         {slides}
                         <CarouselControl direction="prev" directionText="Previous"
                                          onClickHandler={this.previous}/>
@@ -84,9 +88,13 @@ class Home extends Component {
                                          onClickHandler={this.next}/>
                     </Carousel>
                 </div>
-                <button>
-                    <NavLink to="/shopping">Shop</NavLink>
-                </button>
+                <label className="switch">
+                    <input type="checkbox" value={this.state.toggle} onChange={(e) => this.setState({toggle:e.target.checked})}/>
+                    <span>Toggle Slide Show</span>
+                </label>
+                <Button className="m-5 btn-outline-success">
+                    <Link to="/shopping">Shop All</Link>
+                </Button>
             </div>
 
         );

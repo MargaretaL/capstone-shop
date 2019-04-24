@@ -3,51 +3,62 @@
  */
 
 import React from 'react';
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-
 
 
 class Contact extends React.Component {
 
+    state = {
+        formMessage: ''
+    };
 
-    options= [
-        { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: {'C': '3PO'}, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
-        ];
+    handleChange = (e) => {
+        this.setState({formMessage: e.target.value});
+    };
+
+    onSubmit = () => {
+        alert(this.state.formMessage)
+    };
 
     render() {
         return (
-            <Form>
-                <FormGroup row>
-                    <Label for="exampleEmail" sm={2}>Email</Label>
-                    <Col sm={10}>
-                        <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label for="examplePassword" sm={2}>Password</Label>
-                    <Col sm={10}>
-                        <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label for="exampleSelect" sm={2}>Select</Label>
-                    <Col sm={10}>
-                        <Input type="select" name="select" id="exampleSelect"/>
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label for="exampleText" sm={2}>Text Area</Label>
-                    <Col sm={10}>
-                        <Input type="textarea" name="text" id="exampleText" />
-                    </Col>
-                </FormGroup>
-            </Form>
-
-    );
+            <div className="mt-5 col-lg-10 m-auto">
+            <form className="m-5 bg-white shadow-lg border-secondary p-4" onSubmit={this.onSubmit}>
+                <fieldset>
+                    <legend>Contact us</legend>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <input type="text" className="form-control" placeholder="firstname"/>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <input type="text" className="form-control" placeholder="lastname"/>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <input type="text" className="form-control" placeholder="email"/>
+                    </div>
+                    <div className="form-group col-md-4">
+                        <select id="inputState" className="form-control">
+                            <option>Choose Subject</option>
+                            <option>Products</option>
+                            <option>Shopping</option>
+                            <option>Shipping</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <input type="text" className="form-control" placeholder="Write a message" onChange={this.handleChange}/>
+                    </div>
+                </div>
+                <button type="submit" className="btn btn-success">Send</button>
+                    </fieldset>
+            </form>
+                <aside className="m-5">
+                    <p>Phone: +111 111 111</p>
+                    <p>Email: supershopper@shop.com</p>
+                </aside>
+            </div>
+        );
     }
 }
 

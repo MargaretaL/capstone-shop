@@ -54,7 +54,9 @@ class Shopping extends React.Component {
                             })}
                         </Nav>
                     </div>
-                    <div className="col-lg-8 m-sm-auto flex-wrap">
+                   {/* The user shall see a grid that is populated with the products of
+                    the selected category, rubric20*/}
+                    <div className="col-lg-8 m-sm-auto flex-wrap mb-5">
                         <ItemCards/>
                     </div>
                 </div>

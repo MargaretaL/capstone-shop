@@ -27,12 +27,21 @@ class CategoryListItem extends React.Component {
     render() {
         return (
                 <NavItem>
+                   {/* The user shall see a category menu that displays all of the
+                    available shopping categories, rubric19
+                    Clicking on a category name in the category menu should toggle a
+                    dropdown of the available subcategories within that category, rubric25*/}
                     <NavLink style={{fontSize: '1.3rem'}}
                              onClick={this.toggleCategory}>{this.props.categoryObject.category}</NavLink>
                     <Collapse isOpen={this.state.collapse}>
                         {this.props.categoryObject.subcategories.map((subcategory, id) => {
                             return (
                                 <div className="text-muted" style={{marginLeft: '1rem'}} key={id}>
+                                    {/*Clicking on a subcategory should repopulate the grid of products
+                                    with items from the subcategory that was just clicked.rubric26
+                                     Clicking on a subcategory should change the name of the selected
+                                     category in the controls bar, rubric27
+                                    */}
                                     <NavLink
                                         onClick={() => this.handleSelectedSubCategory(subcategory)}>{subcategory.name}</NavLink>
                                 </div>

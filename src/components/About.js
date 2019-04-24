@@ -3,20 +3,16 @@
  */
 
 import React from 'react';
-import { Jumbotron, Button } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
 
 const About = (props) => {
     return (
         <div className="mt-5">
             {/*About page is visually appealing (score 1-3) rubric63*/}
-            <Jumbotron style={{backgroundColor: '#8FC33A'}}>
-                <h1 className="display-3">We love our customers and our products!</h1>
-                <p className="lead">You mean everything to us, that is why we strive to give you the best this world has to offer.</p>
+            <Jumbotron className="bg-success">
+                <h1 className="display-3 text-light">We love our customers and our products!</h1>
+                <p className="lead text-light">You mean everything to us, that is why we strive to give you the best this world has to offer.</p>
                 <hr className="my-2" />
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p className="lead">
-                    <Button color="info">Learn More</Button>
-                </p>
             </Jumbotron>
         </div>
     );
